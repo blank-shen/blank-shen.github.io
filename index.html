@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏宇宙 - 探索网络游戏的无限可能</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #dfe6e9;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+        }
+        
+        body {
+            background-color: #1a1a2e;
+            color: #f0f0f0;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(253, 121, 168, 0.1) 0%, transparent 20%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(108, 92, 231, 0.3);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .auth-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .login-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .signup-btn {
+            background: var(--accent);
+            border: 2px solid var(--accent);
+            color: white;
+        }
+        
+        .signup-btn:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, rgba(26, 26, 46, 0.9), rgba(26, 26, 46, 0.8)), 
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--light);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            box-shadow: 0 5px 15px rgba(253, 121, 168, 0.4);
+        }
+        
+        .btn-accent:hover {
+            box-shadow: 0 8px 20px rgba(253, 121, 168, 0.6);
+        }
+        
+        /* 游戏展示区 */
+        .featured-games {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: var(--light);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .game-card {
+            background: rgba(45, 52, 54, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .game-card:hover .game-image img {
+            transform: scale(1.1);
+        }
+        
+        .game-content {
+            padding: 20px;
+        }
+        
+        .game-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        .game-description {
+            margin-bottom: 20px;
+            color: #b2bec3;
+        }
+        
+        .game-rating {
+            color: var(--warning);
+        }
+        
+        /* 新闻部分 */
+        .news {
+            padding: 80px 0;
+            background: rgba(26, 26, 46, 0.7);
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            background: rgba(45, 52, 54, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .news-image {
+            height: 180px;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .news-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .news-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .news-date {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .news-excerpt {
+            margin-bottom: 20px;
+            color: #b2bec3;
+            flex-grow: 1;
+        }
+        
+        /* 排行榜部分 */
+        .leaderboard {
+            padding: 80px 0;
+        }
+        
+        .leaderboard-container {
+            background: rgba(45, 52, 54, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .leaderboard-header {
+            background: var(--primary);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .leaderboard-title {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .leaderboard-filter select {
+            background: rgba(0, 0, 0, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .leaderboard-list {
+            padding: 20px;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+        
+        .rank {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--dark);
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .rank-1 {
+            background: linear-gradient(45deg, #ffd700, #ffaa00);
+            color: var(--dark);
+        }
+        
+        .rank-2 {
+            background: linear-gradient(45deg, #c0c0c0, #a0a0a0);
+            color: var(--dark);
+        }
+        
+        .rank-3 {
+            background: linear-gradient(45deg, #cd7f32, #a56a2b);
+            color: var(--dark);
+        }
+        
+        .player-info {
+            flex-grow: 1;
+        }
+        
+        .player-name {
+            font-weight: bold;
+            color: var(--light);
+        }
+        
+        .player-game {
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+        
+        .player-score {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        /* 社区部分 */
+        .community {
+            padding: 80px 0;
+            background: rgba(26, 26, 46, 0.7);
+        }
+        
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .community-card {
+            background: rgba(45, 52, 54, 0.6);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .community-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .community-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .community-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .community-description {
+            margin-bottom: 20px;
+            color: #b2bec3;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: #0c0c14;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #b2bec3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b2bec3;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .games-grid, .news-grid, .community-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-buttons {
+                display: none;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-gamepad"></i>
+                    游戏宇宙
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#games">游戏</a></li>
+                    <li><a href="#news">新闻</a></li>
+                    <li><a href="#leaderboard">排行榜</a></li>
+                    <li><a href="#community">社区</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="auth-btn login-btn">登录</button>
+                    <button class="auth-btn signup-btn">注册</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content animated">
+                <h1>探索游戏世界的无限可能</h1>
+                <p>发现最新最热门的网络游戏，加入全球玩家社区，体验极致的游戏乐趣</p>
+                <div class="hero-buttons">
+                    <button class="btn">热门游戏</button>
+                    <button class="btn btn-accent">加入社区</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 游戏展示区 -->
+    <section class="featured-games" id="games">
+        <div class="container">
+            <h2 class="section-title animated">热门游戏</h2>
+            <div class="games-grid">
+                <div class="game-card animated delay-1">
+                    <div class="game-image">
+                        <img src="https://images.unsplash.com/photo-1542751110-97427bbecf20?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="游戏1">
+                    </div>
+                    <div class="game-content">
+                        <h3 class="game-title">星际战争</h3>
+                        <div class="game-info">
+                            <span>MMORPG</span>
+                            <span class="game-rating">★★★★☆</span>
+                        </div>
+                        <p class="game-description">沉浸式科幻MMORPG，探索浩瀚宇宙，建立你的星际帝国。</p>
+                        <button class="btn">了解更多</button>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-2">
+                    <div class="game-image">
+                        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="游戏2">
+                    </div>
+                    <div class="game-content">
+                        <h3 class="game-title">暗影之境</h3>
+                        <div class="game-info">
+                            <span>冒险</span>
+                            <span class="game-rating">★★★★★</span>
+                        </div>
+                        <p class="game-description">黑暗幻想风格冒险游戏，探索神秘世界，揭开古老秘密。</p>
+                        <button class="btn">了解更多</button>
+                    </div>
+                </div>
+                
+                <div class="game-card animated delay-3">
+                    <div class="game-image">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="游戏3">
+                    </div>
+                    <div class="game-content">
+                        <h3 class="game-title">极限竞速</h3>
+                        <div class="game-info">
+                            <span>竞速</span>
+                            <span class="game-rating">★★★★☆</span>
+                        </div>
+                        <p class="game-description">高速竞技赛车游戏，体验极速狂飙，征服各种赛道。</p>
+                        <button class="btn">了解更多</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新闻部分 -->
+    <section class="news" id="news">
+        <div class="container">
+            <h2 class="section-title animated">最新资讯</h2>
+            <div class="news-grid">
+                <div class="news-card animated delay-1">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="新闻1">
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">《星际战争》新扩展包"银河征服"即将上线</h3>
+                        <div class="news-date">2023年10月15日</div>
+                        <p class="news-excerpt">广受欢迎的MMORPG《星际战争》宣布将于下月发布全新扩展包，新增多个星系和太空站...</p>
+                        <button class="btn">阅读更多</button>
+                    </div>
+                </div>
+                
+                <div class="news-card animated delay-2">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="新闻2">
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">电竞锦标赛总决赛下周开幕，奖金池达500万美元</h3>
+                        <div class="news-date">2023年10月12日</div>
+                        <p class="news-excerpt">本年度的电竞锦标赛即将进入高潮，来自全球的顶尖选手将争夺冠军荣誉和巨额奖金...</p>
+                        <button class="btn">阅读更多</button>
+                    </div>
+                </div>
+                
+                <div class="news-card animated delay-3">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1542751371-6533a4595f6a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="新闻3">
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">虚拟现实游戏《维度穿梭》获得年度创新奖</h3>
+                        <div class="news-date">2023年10月8日</div>
+                        <p class="news-excerpt">创新VR游戏《维度穿梭》在今年的游戏创新大会上荣获年度最具创新游戏奖，评测家称赞其...</p>
+                        <button class="btn">阅读更多</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 排行榜部分 -->
+    <section class="leaderboard" id="leaderboard">
+        <div class="container">
+            <h2 class="section-title animated">玩家排行榜</h2>
+            <div class="leaderboard-container animated delay-1">
+                <div class="leaderboard-header">
+                    <h3 class="leaderboard-title">顶级玩家</h3>
+                    <div class="leaderboard-filter">
+                        <select>
+                            <option>本周</option>
+                            <option>本月</option>
+                            <option>全部时间</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="leaderboard-list">
+                    <div class="leaderboard-item">
+                        <div class="rank rank-1">1</div>
+                        <div class="player-info">
+                            <div class="player-name">ShadowHunter</div>
+                            <div class="player-game">星际战争</div>
+                        </div>
+                        <div class="player-score">9,845</div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="rank rank-2">2</div>
+                        <div class="player-info">
+                            <div class="player-name">NeonBlade</div>
+                            <div class="player-game">暗影之境</div>
+                        </div>
+                        <div class="player-score">9,210</div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="rank rank-3">3</div>
+                        <div class="player-info">
+                            <div class="player-name">QuantumQueen</div>
+                            <div class="player-game">星际战争</div>
+                        </div>
+                        <div class="player-score">8,976</div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="rank">4</div>
+                        <div class="player-info">
+                            <div class="player-name">EpicGamer</div>
+                            <div class="player-game">极限竞速</div>
+                        </div>
+                        <div class="player-score">8,754</div>
+                    </div>
+                    
+                    <div class="leaderboard-item">
+                        <div class="rank">5</div>
+                        <div class="player-info">
+                            <div class="player-name">MysticSage</div>
+                            <div class="player-game">暗影之境</div>
+                        </div>
+                        <div class="player-score">8,532</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社区部分 -->
+    <section class="community" id="community">
+        <div class="container">
+            <h2 class="section-title animated">加入社区</h2>
+            <div class="community-grid">
+                <div class="community-card animated delay-1">
+                    <div class="community-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="community-title">玩家论坛</h3>
+                    <p class="community-description">加入我们的活跃社区，与其他玩家交流游戏心得，分享技巧和经验。</p>
+                    <button class="btn">加入讨论</button>
+                </div>
+                
+                <div class="community-card animated delay-2">
+                    <div class="community-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="community-title">活动赛事</h3>
+                    <p class="community-description">参与定期举办的游戏赛事和活动，赢取独家奖励和稀有物品。</p>
+                    <button class="btn">查看活动</button>
+                </div>
+                
+                <div class="community-card animated delay-3">
+                    <div class="community-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="community-title">直播频道</h3>
+                    <p class="community-description">观看顶尖玩家的实时直播，学习高级策略和游戏技巧。</p>
+                    <button class="btn">观看直播</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <p>游戏宇宙是专注于网络游戏资讯和社区的平台，为玩家提供最新游戏信息、攻略和社区交流空间。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-bilibili"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#games">游戏</a></li>
+                        <li><a href="#news">新闻</a></li>
+                        <li><a href="#leaderboard">排行榜</a></li>
+                        <li><a href="#community">社区</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>热门游戏</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">星际战争</a></li>
+                        <li><a href="#">暗影之境</a></li>
+                        <li><a href="#">极限竞速</a></li>
+                        <li><a href="#">维度穿梭</a></li>
+                        <li><a href="#">幻想王国</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> contact@gameuniverse.com</li>
+                        <li><i class="fas fa-phone"></i> +86 400 123 4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 北京市海淀区中关村大街1号</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 游戏宇宙 - 所有权利 reserved | 网络游戏主题网站</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animated');
+            
+            // 检查元素是否在视口中
+            function checkIfInView() {
+                animatedElements.forEach(function(element) {
+                    const position = element.getBoundingClientRect();
+                    
+                    // 如果元素在视口中
+                    if(position.top < window.innerHeight && position.bottom >= 0) {
+                        element.classList.add('fadeIn');
+                    }
+                });
+            }
+            
+            // 初始检查
+            checkIfInView();
+            
+            // 滚动时检查
+            window.addEventListener('scroll', checkIfInView);
+            
+            // 排行榜筛选功能
+            const filterSelect = document.querySelector('.leaderboard-filter select');
+            filterSelect.addEventListener('change', function() {
+                alert('已选择: ' + this.value);
+                // 实际应用中这里会发送请求获取对应数据
+            });
+            
+            // 游戏卡片点击事件
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const gameTitle = this.querySelector('.game-title').textContent;
+                    alert('正在打开 ' + gameTitle + ' 的详情页面');
+                });
+            });
+            
+            // 登录/注册按钮事件
+            const loginBtn = document.querySelector('.login-btn');
+            const signupBtn = document.querySelector('.signup-btn');
+            
+            loginBtn.addEventListener('click', function() {
+                alert('打开登录对话框');
+            });
+            
+            signupBtn.addEventListener('click', function() {
+                alert('打开注册对话框');
+            });
+        });
+    </script>
+</body>
+</html>
